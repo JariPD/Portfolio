@@ -1,0 +1,51 @@
+/* Scrollable Projects Section */
+.projects-section {
+    text-align: center;
+    border-radius: 20px;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    max-height: 750px;
+    padding: 20px;
+    max-width: 600px;
+    height: 75vh;
+    box-shadow: 0 0 30px rgba(255, 184, 217, 0.3); /* Shadow around the card */
+}
+
+.projects-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.project-card {
+    padding: 50px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 184, 217, 0.1);
+}
+
+.project-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.project-card p {
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Scrollbar customization */
+.projects-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.projects-section::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 6px;
+}
+
+.projects-section::-webkit-scrollbar-track {
+    background-color: #222;
+    border-radius: 6px;
+} 
+
