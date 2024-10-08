@@ -13,7 +13,6 @@
     border-radius: 20px;
     box-shadow: 0 0 30px rgba(255, 184, 217, 0.3); /* Shadow around the card */
     max-width: 500px;
-    height: 75vh;
 }
 
 /* Profile image styling */
@@ -45,10 +44,9 @@
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
-    max-height: 750px;
+    max-height: 700px;
     padding: 20px;
     max-width: 600px;
-    height: 75vh;
     box-shadow: 0 0 30px rgba(255, 184, 217, 0.3); /* Shadow around the card */
 }
 
