@@ -71,21 +71,6 @@
     font-size: 14px;
     color: #bbb;
 }
-
-/* Scrollbar customization */
-.projects-section::-webkit-scrollbar {
-    width: 8px;
-}
-
-.projects-section::-webkit-scrollbar-thumb {
-    background-color: #444;
-    border-radius: 6px;
-}
-
-.projects-section::-webkit-scrollbar-track {
-    background-color: #222;
-    border-radius: 6px;
-} 
     
 
 /* ========== MEDIA QUERIES ========== */
