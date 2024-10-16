@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Project Titel</title>
+    <link rel="stylesheet" href="/css/base-layout.css" />
+    <link rel="stylesheet" href="/css/project-page.css" />
+    <script src="/js/scripts.js"></script>
+    <script src="/js/project-loader.js" defer></script> <!-- Make sure this script is loaded after DOM -->
+</head>
+<body>
+     <!-- Placeholder for the header -->
+     <div id="header"></div>
+
+    <div class="container">
+        <div class="project-content">
+            <h1 id="project-title">Project Titel</h1>
+            
+            <div class="video-container">
+                <iframe id="project-video" frameborder="0" allowfullscreen></iframe>
+            </div>
+            
+            <div class="project-info">
+                <h2>Project Details</h2>
+                <p><span id="project-duration"></span></p>
+                <p><span id="project-description"></span></p>
+            </div>
+            
+            <div class="project-info">
+                <h2>Gebruikte Technologieën</h2>
+                <ul class="tech-list" id="project-technologies">
+                </ul>
+            </div>
+            
+            <div class="project-info" id="project-team-section">
+                <h2>Teamleden en Rollen</h2>
+                <ul class="team-list" id="project-team">
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

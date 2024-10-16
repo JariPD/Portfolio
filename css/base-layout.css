@@ -1,0 +1,151 @@
+/* ========== VARIABLES ========== */
+:root {
+  --c-black: #05091e;
+  --c-blue: #46b4ff;
+  --c-gray: #b6b6b6;
+  --c-pink: #ffb8d9;
+  --c-pink-low: #ffb8d98a;
+  --c-pink-low-alpha: 255, 184, 217, 0.8;
+  --c-white: #fff;
+  --background: #0a0a0a;
+  --filter-pink-hover: invert(81%) sepia(17%) saturate(1023%) hue-rotate(294deg)
+    brightness(102%) contrast(101%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Scrollbar customization */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #222;
+  border-radius: 6px;
+}
+
+/* ========== TYPOGRAPHY ========== */
+body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 1.25rem;
+  color: white;
+  background-color: var(--background);
+}
+
+/* ========== HEADER ========== */
+header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 3rem;
+}
+
+.logo img {
+  max-height: 50px;
+}
+
+/* ========== NAVIGATION ========== */
+.nav-links ul {
+  display: flex;
+  list-style: none;
+  padding-left: 10px;
+}
+
+.nav-links ul li {
+  padding: 0 10px;
+}
+
+.nav-links ul li a {
+  color: var(--base);
+  text-decoration: none;
+}
+
+.nav-links ul li a:hover {
+  color: var(--c-pink);
+}
+
+/* ========== SOCIAL ICONS ========== */
+.socials {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  right: 60px;
+}
+
+.socials a {
+  margin-left: 10px;
+}
+
+.socials a:hover img {
+  filter: var(--filter-pink-hover);
+  transform: scale(1.1);
+}
+
+.socials img {
+  width: 36px;
+  height: 36px;
+}
+
+/* ========== HAMBURGER ICON ========== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.filter-white {
+  filter: invert(99%) sepia(0%) saturate(1697%) hue-rotate(67deg)
+    brightness(106%) contrast(100%);
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: var(--background);
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-links.active {
+    display: block;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-links ul li {
+    margin: 10px 0;
+  }
+
+  .socials {
+    position: static;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 20px;
+  }
+}

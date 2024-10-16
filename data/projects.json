@@ -1,0 +1,52 @@
+[
+    {
+        "id": "1",
+        "title": "Project 1",
+        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "duration": "6 maanden",
+        "description": "Dit is een uitgebreide omschrijving van Project 1, inclusief doelen, uitdagingen en resultaten.",
+        "technologies": ["Software 1", "Programmeertaal 1", "Software 2", "Programmeertaal 2"],
+        "team": [
+            {
+                "name": "Teamlid 1",
+                "role": "Ontwikkelaar"
+            },
+            {
+                "name": "Teamlid 2",
+                "role": "Designer"
+            },
+            {
+                "name": "Teamlid 3",
+                "role": "Projectmanager"
+            }
+        ]
+    },
+
+    {
+        "id": "2",
+        "title": "Project 2",
+        "videoUrl": "https://www.youtube.com/embed/ANOTHER_VIDEO_ID",
+        "duration": "4 maanden",
+        "description": "Dit is een uitgebreide omschrijving van Project 2, met details over de uitdagingen en de behaalde resultaten.",
+        "technologies": ["HTML", "CSS", "JavaScript", "React"],
+        "team": [
+            {
+                "name": "Teamlid 1",
+                "role": "Lead Developer"
+            },
+            {
+                "name": "Teamlid 2",
+                "role": "UX/UI Designer"
+            }
+        ]
+    },
+
+    {
+        "id": "3",
+        "title": "Project 3",
+        "videoUrl": "https://www.youtube.com/embed/ANOTHER_VIDEO_ID",
+        "duration": "4 maanden",
+        "description": "Dit is een uitgebreide omschrijving van Project 2, met details over de uitdagingen en de behaalde resultaten.",
+        "technologies": ["HTML", "CSS", "JavaScript", "React"]
+    }
+]
