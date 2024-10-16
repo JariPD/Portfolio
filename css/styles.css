@@ -56,11 +56,6 @@
     box-shadow: 0 0 30px rgba(255, 184, 217, 0.3);
 }
 
-.projects-section h2 {
-    text-align: center;
-    margin-bottom: 5%;
-}
-
 .project-card {
     position: relative;
     padding: 10%;

@@ -1,52 +1,72 @@
 [
     {
         "id": "1",
-        "title": "Project 1",
+        "title": "Insania",
         "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
-        "duration": "6 maanden",
-        "description": "Dit is een uitgebreide omschrijving van Project 1, inclusief doelen, uitdagingen en resultaten.",
-        "technologies": ["Software 1", "Programmeertaal 1", "Software 2", "Programmeertaal 2"],
+        "duration": "8 Weeks",
+        "date":"16-1-2023",
+        "description": "Insania is a small dialogue driven horror game where you play 3 games. Blackjack, War and Russian Roulette. The goal is to win all 3 games while trying to understand what happened to yourself. ",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team": [
             {
-                "name": "Teamlid 1",
-                "role": "Ontwikkelaar"
+                "name": "Jari Dijk",
+                "role": "Developer"
             },
             {
-                "name": "Teamlid 2",
-                "role": "Designer"
+                "name": "Niels Henning",
+                "role": "Developer"
             },
             {
-                "name": "Teamlid 3",
-                "role": "Projectmanager"
+                "name": "Henrian",
+                "role": "Artist"
+            },
+            {
+                "name": "Sjoerd",
+                "role": "Artist"
+            },
+            {
+                "name": "Aleks",
+                "role": "Artist"
             }
         ]
     },
 
     {
         "id": "2",
-        "title": "Project 2",
-        "videoUrl": "https://www.youtube.com/embed/ANOTHER_VIDEO_ID",
-        "duration": "4 maanden",
-        "description": "Dit is een uitgebreide omschrijving van Project 2, met details over de uitdagingen en de behaalde resultaten.",
-        "technologies": ["HTML", "CSS", "JavaScript", "React"],
+        "title": "Brimfire",
+        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "duration": "8 Weeks",
+        "date":"30-6-2022",
+        "description": "In Brimfire you walk around as a failed experiment by the witch. The goal is to solve a bunch of different puzzles by manipulating fire. After solving all the puzzles you will finally be free.",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team": [
             {
-                "name": "Teamlid 1",
-                "role": "Lead Developer"
+                "name": "Jari Dijk",
+                "role": "Developer"
             },
             {
-                "name": "Teamlid 2",
-                "role": "UX/UI Designer"
+                "name": "Timothy",
+                "role": "Artist"
+            },
+            {
+                "name": "Jeremy",
+                "role": "Artist"
+            },
+            {
+                "name": "Nieke",
+                "role": "Artist"
             }
         ]
     },
 
     {
         "id": "3",
-        "title": "Project 3",
-        "videoUrl": "https://www.youtube.com/embed/ANOTHER_VIDEO_ID",
-        "duration": "4 maanden",
-        "description": "Dit is een uitgebreide omschrijving van Project 2, met details over de uitdagingen en de behaalde resultaten.",
-        "technologies": ["HTML", "CSS", "JavaScript", "React"]
+        "title": "A* pathfinding",
+        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "duration": "8 Weeks",
+        "date":"13-1-2023",
+        "description": "The A* pathfinding algorithm is an algorithm similair to dijkstra's algorithm. You overlay a grid over the place where you want to calculate and assign values to nodes in that grid. H cost = estimated distance from current node to end node, G cost = distance between current node and starting node and the F cost = G cost + H cost. After assigning values to the nodes you can calculate the shortest path between the start and end node.",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
     }
+
 ]
