@@ -3,8 +3,10 @@
         "id": "1",
         "title": "Insania",
         "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/Insania.png",
         "duration": "8 Weeks",
         "date":"16-1-2023",
+        "small_description": "Insania",
         "description": "Insania is a small dialogue driven horror game where you play 3 games. Blackjack, War and Russian Roulette. The goal is to win all 3 games while trying to understand what happened to yourself. ",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team": [
@@ -35,6 +37,7 @@
         "id": "2",
         "title": "Brimfire",
         "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/brimfire.png",
         "duration": "8 Weeks",
         "date":"30-6-2022",
         "description": "In Brimfire you walk around as a failed experiment by the witch. The goal is to solve a bunch of different puzzles by manipulating fire. After solving all the puzzles you will finally be free.",
@@ -63,6 +66,7 @@
         "id": "3",
         "title": "A* pathfinding",
         "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/AStar.png",
         "duration": "8 Weeks",
         "date":"13-1-2023",
         "description": "The A* pathfinding algorithm is an algorithm similair to dijkstra's algorithm. You overlay a grid over the place where you want to calculate Then you assign values to the nodes in that grid. This algorithm uses a cost system: H cost = estimated distance from current node to end node, G cost = distance between current node and starting node and the F cost = G cost + H cost. After assigning values to the nodes you can calculate the shortest path between the start and end node.",
@@ -73,10 +77,34 @@
         "id": "4",
         "title": "Idle game",
         "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/idleGame.png",
         "duration": "3 Weeks",
         "date":"21-10-2022",
         "description": "This is the first project where I used databases and php to store the different users data which can be loaded back into the game on play. The game is a simple idle game where you can grow your own appletrees. With the apples you get from the trees you can purchase animals that give you the power to attack enemies.",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello, Easyphp devserver"]
-    }
+    },
 
+    {
+        "id": "5",
+        "title": "Project name",
+        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/",
+        "duration": "- Weeks",
+        "date":"00-00-0000",
+        "small_description": "",
+        "description": "",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
+    },
+
+    {
+        "id": "6",
+        "title": "Project name",
+        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/",
+        "duration": "- Weeks",
+        "date":"00-00-0000",
+        "small_description": "",
+        "description": "",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
+    }
 ]
