@@ -5,6 +5,7 @@
     justify-content: space-around;
     margin: 0 auto;
     padding: 4%;
+    min-height: 80vh;
 }
 
 /* Profile card container */
@@ -15,7 +16,7 @@
     box-shadow: 0 0 30px rgba(255, 184, 217, 0.3);
     width: 40%;
     max-width: 500px;
-    max-height: 73vh;
+    max-height: 70vh;
     margin-right: 10%;
 }
 
@@ -49,7 +50,7 @@
     flex-direction: column;
     flex: 1;
     overflow-y: auto;
-    max-height: 73vh;
+    max-height: 70vh;
     padding: 2%;
     width: 45%;
     max-width: 700px;

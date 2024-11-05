@@ -4,30 +4,36 @@
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  height: auto;
   max-height: 80vh;
-  padding: 3%;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: min(90%, 1200px);
+  padding: clamp(1rem, 3vw, 3rem);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   box-shadow: 0 0 30px rgba(255, 184, 217, 0.3);
 }
 
 .project-cards-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 columns */
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); /* Prevent grid blowout */
   overflow-y: auto;
-  border-radius: 20px;
+  gap: 2rem; /* Add space between cards */
+  padding: 1rem; /* Add padding around the grid */
+  height: 100%;
+  align-items: start; /* Align items to the start */
 }
 
 .project-image-container {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: #2c2c2c; /* Slightly lighter than the card background */
+  background-color: #2c2c2c;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  border-radius: 10px 10px 0 0;
 }
 
 .project-image-container.no-image::after {
@@ -45,36 +51,42 @@
 .project-card {
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
-  overflow: hidden;
+  border-radius: 20px;
   box-shadow: 0px 0px 10px rgba(255, 184, 217, 0.1);
   background-color: #1e1e1e;
-  height: 100%; /* Ensure all cards have the same height */
+  transition: transform 0.2s ease;
+  width: 100%; /* Ensure full width */
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
 }
 
 .project-info {
-  padding: 15px;
+  padding: 1rem;
   background-color: var(--c-pink-low);
   text-align: left;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+  border-radius: 0 0 10px 10px;
 }
 
 .project-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
+  font-size: 1.1rem;
+  margin: 0;
+  color: #fff;
 }
 
 .project-card p {
   font-size: 0.9rem;
-  margin-bottom: 5px;
-  flex-grow: 1;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .project-date {
   font-size: 0.8rem;
-  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .project-link {
@@ -85,30 +97,38 @@
 
 /* Media Queries for Responsiveness */
 @media (max-width: 1024px) {
+  .projects-section {
+    height: 75vh;
+  }
   .project-cards-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2em;
   }
 }
 
 @media (max-width: 768px) {
   .projects-section {
-    width: 95%;
-    padding: 5%;
+    height: 70vh;
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    margin: 2vh auto;
   }
-  .project-card h3 {
-    font-size: 1rem;
-  }
-  .project-card p {
-    font-size: 0.8rem;
+  .project-cards-container {
+    gap: 1.5rem;
+    padding: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .projects-section {
-    max-height: none;
-    overflow-y: visible;
+    height: 80vh;
+    margin: 1vh auto;
   }
   .project-cards-container {
-    grid-template-columns: 1fr; /* 1 column on very small screens */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+    padding: 0.5rem;
   }
 }

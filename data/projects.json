@@ -106,5 +106,17 @@
         "small_description": "",
         "description": "",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
+    },
+
+    {
+        "id": "7",
+        "title": "Project name",
+        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "imageUrl": "/assets/imgs/",
+        "duration": "- Weeks",
+        "date":"00-00-0000",
+        "small_description": "",
+        "description": "",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
     }
 ]
