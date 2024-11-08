@@ -2,10 +2,9 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 3%;
+    padding: 0 3%;
 }
 
 .profile-section {
