@@ -43,7 +43,7 @@ function createProjectCard(project) {
     title.textContent = project.title;
 
     const description = document.createElement("p");
-    description.textContent = project.small_description || "No description available.";
+    description.textContent = project.short_description || "No description available.";
 
     const date = document.createElement("span");
     date.className = "project-date";

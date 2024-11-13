@@ -6,7 +6,7 @@
         "imageUrl": "/assets/imgs/Insania.png",
         "duration": "8 Weeks",
         "date":"16-1-2023",
-        "small_description": "Insania",
+        "short_description": "Battle against death itself in this dialoge driven horror game",
         "description": "Insania is a small dialogue driven horror game where you play 3 games. Blackjack, War and Russian Roulette. The goal is to win all 3 games while trying to understand what happened to yourself. ",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team": [
@@ -40,7 +40,8 @@
         "imageUrl": "/assets/imgs/brimfire.png",
         "duration": "8 Weeks",
         "date":"30-6-2022",
-        "description": "In Brimfire you walk around as a failed experiment by the witch. The goal is to solve a bunch of different puzzles by manipulating fire. After solving all the puzzles you will finally be free.",
+        "short_description": "A small puzzle game where you navigate through a witch house",
+        "description": "In Brimfire you explore as a failed experiment by the witch. The goal is to solve a bunch of different puzzles by manipulating fire. After solving all the puzzles you will finally be free.",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team": [
             {
@@ -51,7 +52,7 @@
                 "name": "Timothy",
                 "role": "Artist"
             },
-            {
+            { 
                 "name": "Jeremy",
                 "role": "Artist"
             },
@@ -69,6 +70,7 @@
         "imageUrl": "/assets/imgs/AStar.png",
         "duration": "8 Weeks",
         "date":"13-1-2023",
+        "short_description": "A grid and node based pathfinding algorithm for navigation",
         "description": "The A* pathfinding algorithm is an algorithm similair to dijkstra's algorithm. You overlay a grid over the place where you want to calculate Then you assign values to the nodes in that grid. This algorithm uses a cost system: H cost = estimated distance from current node to end node, G cost = distance between current node and starting node and the F cost = G cost + H cost. After assigning values to the nodes you can calculate the shortest path between the start and end node.",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
     },
@@ -80,20 +82,31 @@
         "imageUrl": "/assets/imgs/idleGame.png",
         "duration": "3 Weeks",
         "date":"21-10-2022",
+        "short_description": "A small idle game where I learned about databases",
         "description": "This is the first project where I used databases and php to store the different users data which can be loaded back into the game on play. The game is a simple idle game where you can grow your own appletrees. With the apples you get from the trees you can purchase animals that give you the power to attack enemies.",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello, Easyphp devserver"]
     },
 
     {
         "id": "5",
-        "title": "Project name",
+        "title": "SpeedStar",
         "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
-        "imageUrl": "/assets/imgs/",
+        "imageUrl": "/assets/imgs/Speedstar.png",
         "duration": "- Weeks",
-        "date":"00-00-0000",
-        "small_description": "",
-        "description": "",
-        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
+        "date":"28-1-2021",
+        "short_description": "A retro racing game made in Unity. The goal is to complete laps with the fastest time",
+        "description": "Our assignment was to make a racing game. We opted for a retro style racing game where you complete multiple laps while following a star",
+        "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
+        "team":[
+            {
+                "name": "Jari Dijk",
+                "role": "Developer"
+            },
+            {
+                "name": "Yoeri",
+                "role": "Developer"
+            }
+        ]
     },
 
     {
@@ -103,6 +116,7 @@
         "imageUrl": "/assets/imgs/",
         "duration": "- Weeks",
         "date":"00-00-0000",
+        "short_description": "",
         "small_description": "",
         "description": "",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
@@ -115,6 +129,7 @@
         "imageUrl": "/assets/imgs/",
         "duration": "- Weeks",
         "date":"00-00-0000",
+        "short_description": "",
         "small_description": "",
         "description": "",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
