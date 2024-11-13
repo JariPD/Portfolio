@@ -51,7 +51,9 @@ header {
 }
 
 .logo img {
+  position: relative;
   max-height: 50px;
+  z-index: 2;
 }
 
 /* ========== NAVIGATION ========== */
@@ -123,6 +125,7 @@ header {
     background-color: var(--background);
     padding: 20px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
   }
 
   .nav-links.active {
