@@ -13,8 +13,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector("h1").innerText = project.title;
 
         // Add video
-        const videoIframe = document.querySelector(".video-container iframe");
-        videoIframe.src = project.videoUrl;
+        if (project.videoUrl && project.videoUrl.trim() !== ''){
+          const videoIframe = document.querySelector(".video-container iframe");
+          videoIframe.src = project.videoUrl;
+        }
+        else{ //Hide video
+          document.getElementById("video-container").style.display = "none";
+        } 
+
 
         // Fill project information
         const projectInfo = document.querySelectorAll(".project-info p");
@@ -39,9 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
             )
             .join("");
         } else {
-          // Verberg de teamsectie als er geen teaminformatie is
-          document.getElementById("project-team-section").style.display =
-            "none";
+          // Hide team section
+          document.getElementById("project-team-section").style.display =  "none";
         }
       } else {
         document.body.innerHTML = "<h1>Project not found</h1>";
