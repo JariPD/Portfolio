@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Add video
         if (project.videoUrl && project.videoUrl.trim() !== ''){
+          const Url = project.videoUrl.replace('watch?v=', 'embed/').split('&')[0]
           const videoIframe = document.querySelector(".video-container iframe");
-          videoIframe.src = project.videoUrl;
+          videoIframe.src = Url;
         }
         else{ //Hide video
           document.getElementById("video-container").style.display = "none";
         } 
-
 
         // Fill project information
         const projectInfo = document.querySelectorAll(".project-info p");

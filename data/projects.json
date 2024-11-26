@@ -2,7 +2,7 @@
     {
         "id": "1",
         "title": "Insania",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "videoUrl": "https://www.youtube.com/watch?v=HGY_mK9v3_E&t",
         "imageUrl": "/assets/imgs/Insania.png",
         "duration": "8 Weeks",
         "date":"16-1-2023",
@@ -36,7 +36,7 @@
     {
         "id": "2",
         "title": "Brimfire",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "videoUrl": "https://www.youtube.com/watch?v=DziPba0UKTM",
         "imageUrl": "/assets/imgs/brimfire.png",
         "duration": "8 Weeks",
         "date":"30-6-2022",
@@ -66,7 +66,7 @@
     {
         "id": "3",
         "title": "A* pathfinding",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "videoUrl": "https://www.youtube.com/watch?v=0pzvYtgz6cY",
         "imageUrl": "/assets/imgs/AStar.png",
         "duration": "8 Weeks",
         "date":"13-1-2023",
@@ -78,7 +78,7 @@
     {
         "id": "4",
         "title": "Idle game",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "videoUrl": "https://www.youtube.com/watch?v=W8LS3WZqL-o",
         "imageUrl": "/assets/imgs/idleGame.png",
         "duration": "3 Weeks",
         "date":"21-10-2022",
@@ -90,9 +90,9 @@
     {
         "id": "5",
         "title": "SpeedStar",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
+        "videoUrl": "https://www.youtube.com/watch?v=Bcbx7kjs4Cs",
         "imageUrl": "/assets/imgs/Speedstar.png",
-        "duration": "- Weeks",
+        "duration": "2 Weeks",
         "date":"28-1-2021",
         "short_description": "A retro racing game made in Unity. The goal is to complete laps with the fastest time",
         "description": "Our assignment was to make a racing game. We opted for a retro style racing game where you complete multiple laps while following a star",
