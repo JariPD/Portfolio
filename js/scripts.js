@@ -1,4 +1,4 @@
-fetch('header.html')
+fetch('/header.html')
   .then(response => response.text())
   .then(data => {
     // Insert the loaded header into the placeholder
