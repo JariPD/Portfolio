@@ -7,7 +7,7 @@
         "duration": "8 Weeks",
         "date":"16-1-2023",
         "short_description": "Battle against death itself in this dialoge driven horror game",
-        "description": "Insania is a small dialogue driven horror game where you play 3 games. Blackjack, War and Russian Roulette. The goal is to win all 3 games while trying to understand what happened to yourself. ",
+        "description": "Insania is a small dialogue driven horror game where you play 3 games. Blackjack, War and Russian Roulette. The goal is to win all 3 games while trying to understand what happened to yourself.",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team": [
             {
@@ -95,7 +95,7 @@
         "duration": "2 Weeks",
         "date":"28-1-2021",
         "short_description": "A retro racing game made in Unity. The goal is to complete laps with the fastest time",
-        "description": "Our assignment was to make a racing game. We opted for a retro style racing game where you complete multiple laps while following a star",
+        "description": "Our assignment was to make a racing game. We opted for a retro style racing game where you complete multiple laps while following a star. The goal is to complete 3 laps with the fastest time.",
         "technologies": ["Unity", "Github", "Visual Studio", "Trello"],
         "team":[
             {
@@ -107,31 +107,5 @@
                 "role": "Developer"
             }
         ]
-    },
-
-    {
-        "id": "6",
-        "title": "Project name",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
-        "imageUrl": "/assets/imgs/",
-        "duration": "- Weeks",
-        "date":"00-00-0000",
-        "short_description": "",
-        "small_description": "",
-        "description": "",
-        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
-    },
-
-    {
-        "id": "7",
-        "title": "Project name",
-        "videoUrl": "https://www.youtube.com/embed/YOUR_VIDEO_ID",
-        "imageUrl": "/assets/imgs/",
-        "duration": "- Weeks",
-        "date":"00-00-0000",
-        "short_description": "",
-        "small_description": "",
-        "description": "",
-        "technologies": ["Unity", "Github", "Visual Studio", "Trello"]
     }
 ]
