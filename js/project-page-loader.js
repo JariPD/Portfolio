@@ -57,7 +57,7 @@ function createProjectCard(project) {
     card.appendChild(info);
 
     const link = document.createElement("a");
-    link.href = `/pages/project-page.html?id=${project.id}`;
+    link.href = `project-page.html?id=${project.id}`;
     link.className = "project-link";
     link.appendChild(card);
 
