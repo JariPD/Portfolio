@@ -116,6 +116,17 @@
   }
 }
 
+@media (max-height: 800px) {
+  .profile-name {
+    font-size: 1.8rem;
+  }
+
+  .profile-bio {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     width: 95%;
