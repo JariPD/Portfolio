@@ -2,9 +2,7 @@ import Image from "next/image";
 import profile from "@/public/Profile.jpg";
 import profileHover from "@/public/ProfileHover.jpg";
 import { getAllProjects } from "@/lib/projects";
-import { getPublishedPosts } from "@/lib/blog";
 import ProjectCard from "@/components/ProjectCard";
-import BlogPostCard from "@/components/BlogPostCard";
 import Button from "@/components/Button";
 import SkillsSection from "@/components/SkillsSection";
 import ContactForm from "@/components/ContactForm";
@@ -12,10 +10,7 @@ import RevealInit from "@/components/RevealInit";
 import ContactLinks from "@/components/ContactLinks";
 
 export default async function Home() {
-  const [projects, publishedPosts] = await Promise.all([
-    getAllProjects(),
-    getPublishedPosts(),
-  ]);
+  const projects = await getAllProjects();
 
   return (
     <main>
@@ -148,28 +143,6 @@ export default async function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ── BLOG ── */}
-      <section id="blog" className="section-gray section">
-        <div className="container">
-          <div className="section-heading reveal" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
-            <div>
-              <h2>Blog</h2>
-              <p className="text-gray">Technical articles and insights from my day-to-day work as a developer.</p>
-            </div>
-            <Button variant="secondary" href="/blog/new">Write a post</Button>
-          </div>
-          {publishedPosts.length > 0 ? (
-            <div className="blog-grid">
-              {publishedPosts.map((post) => (
-                <BlogPostCard key={post.id} post={post} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray">No posts yet.</p>
-          )}
         </div>
       </section>
 
