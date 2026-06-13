@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
-import { prisma } from "@/lib/prisma";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -18,8 +17,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
   }
 
-  await prisma.contactMessage.create({ data: { name, email, message } });
-
   const { error } = await resend.emails.send({
     from: "Contact Form <noreply@jaridijk.nl>",
     to: [process.env.CONTACT_EMAIL!],
@@ -35,10 +32,10 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     console.error("Failed to send contact email:", error);
-    return NextResponse.json({
-      success: true,
-      warning: "Message saved but email delivery failed.",
-    });
+    return NextResponse.json(
+      { error: "Failed to send message. Please try again." },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({ success: true });
