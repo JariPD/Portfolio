@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Getting Started with React Hooks",
+    "slug": "getting-started-with-react-hooks",
+    "author": "jari@email.nl",
+    "date": "2026-02-15",
+    "status": "published",
+    "preview": "React Hooks have fundamentally changed the way we write React components. In this article I dive into useState, useEffect and useContext.",
+    "content": "React Hooks were introduced in React 16.8 and have completely changed the way we write functional components. Previously you needed class components for state and lifecycle methods, but now you can do all of this with functions.\n\nuseState is the most commonly used hook. You call it with an initial value and get back an array containing the current value and a setter function. useEffect replaces componentDidMount, componentDidUpdate and componentWillUnmount in one elegant API.\n\nIn this article I show how I use hooks in my projects and what pitfalls I ran into along the way."
+  },
+  {
+    "id": 2,
+    "title": "TypeScript for Beginners",
+    "slug": "typescript-for-beginners",
+    "author": "jari@email.nl",
+    "date": "2026-01-28",
+    "status": "published",
+    "preview": "TypeScript adds static typing to JavaScript. But why make the switch? I share my experience after six months of using TypeScript.",
+    "content": "Six months ago I decided to make the switch from plain JavaScript to TypeScript. The learning curve was steeper than I expected, but the benefits are enormous.\n\nThe biggest advantage is IDE support. With TypeScript you get autocompletion that actually works, and errors are caught while you type instead of at runtime. This has significantly boosted my productivity.\n\nType annotations also act as living documentation. When I see a function with clear parameter and return types, I immediately understand what it does without having to read the implementation."
+  },
+  {
+    "id": 3,
+    "title": "My Experience with Docker",
+    "slug": "my-experience-with-docker",
+    "author": "jari@email.nl",
+    "date": "2026-03-10",
+    "status": "pending",
+    "preview": "Docker has completely changed my development workflow. No more 'works on my machine' — containers ensure consistency between development and production.",
+    "content": "Two months ago I started using Docker seriously for my projects. The motivation was a classic problem: my Node.js application worked perfectly on my MacBook but crashed on the Linux production server.\n\nThe solution turned out to be surprisingly simple. A Dockerfile with the correct Node version and dependencies, combined with docker-compose for local development with a database alongside it.\n\nNow I start every project with a docker-compose.yml and know for certain that everyone on the team has the same environment. No more surprises during deployments."
+  },
+  {
+    "id": 4,
+    "title": "REST vs GraphQL: My Choice",
+    "slug": "rest-vs-graphql",
+    "author": "user@example.com",
+    "date": "2026-02-05",
+    "status": "rejected",
+    "preview": "The eternal debate: REST or GraphQL? After using both in production environments I share my honest opinion.",
+    "content": "REST and GraphQL are both excellent choices for API design, but they shine in different situations. REST is simpler to understand and has great tooling. GraphQL gives clients more control over what they fetch.\n\nFor most projects I choose REST. The simplicity wins over the flexibility of GraphQL, unless you are genuinely dealing with complex, nested data or multiple client types with very different data needs.\n\nGraphQL is perfect for public APIs where you serve external developers. REST is better for internal APIs where you know the use cases well."
+  }
+]

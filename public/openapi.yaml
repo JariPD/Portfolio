@@ -1,0 +1,758 @@
+openapi: 3.0.3
+info:
+  title: Portfolio Jari Dijk API
+  version: 1.0.0
+
+tags:
+  - name: Auth
+    description: Registration and authentication
+  - name: Blog
+    description: Blog post management (public and user)
+  - name: Admin
+    description: Admin-only moderation and content management
+  - name: Projects
+    description: Project retrieval and management
+  - name: Contact
+    description: Contact form
+
+paths:
+
+  # ─────────────────────────────────────────
+  # AUTH
+  # ─────────────────────────────────────────
+
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user account
+      description: Creates a new user with role "user". Password is hashed with bcrypt before storage. (F11)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                  example: Jari Dijk
+                email:
+                  type: string
+                  format: email
+                  example: jari@example.com
+                password:
+                  type: string
+                  minLength: 5
+                  example: secret123
+      responses:
+        "201":
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublic"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "409":
+          description: Email address already in use
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error: "Email address already in use"
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Log in with email and password
+      description: |
+        Handled by NextAuth.js (`/api/auth/[...nextauth]`). Validates credentials
+        and sets a session cookie (`next-auth.session-token`). Documented here for
+        reference — the actual endpoint is managed by NextAuth. (F11, US11)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: jari@example.com
+                password:
+                  type: string
+                  example: secret123
+      responses:
+        "200":
+          description: Login successful, session cookie set
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserPublic"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  # ─────────────────────────────────────────
+  # BLOG — PUBLIC
+  # ─────────────────────────────────────────
+
+  /blog/posts:
+    get:
+      tags: [Blog]
+      summary: Retrieve all published blog posts
+      description: Returns all posts with status "published", sorted by date descending. (F15, US16)
+      responses:
+        "200":
+          description: List of published posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPostPublic"
+
+    post:
+      tags: [Blog]
+      summary: Submit a new blog post
+      description: |
+        Authenticated users can submit a blog post. The post is saved with
+        status "pending" and enters the moderation queue. A URL-friendly slug
+        is auto-generated from the title. (F12, US12)
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [title, content]
+              properties:
+                title:
+                  type: string
+                  example: My first blog post
+                content:
+                  type: string
+                  example: This is the content of my blog post...
+      responses:
+        "201":
+          description: Post submitted with status "pending"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /blog/posts/{id}:
+    get:
+      tags: [Blog]
+      summary: Retrieve a single published blog post
+      description: Returns a single post by ID. Only accessible if status is "published". (US16)
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      responses:
+        "200":
+          description: Blog post found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPostPublic"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    delete:
+      tags: [Blog]
+      summary: Delete your own blog post
+      description: |
+        Authenticated users can delete their own posts regardless of status.
+        Admins can delete any post via the admin endpoint. (F13, US13)
+      security:
+        - sessionAuth: []
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      responses:
+        "200":
+          description: Post deleted successfully
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /blog/posts/{id}/status:
+    patch:
+      tags: [Admin]
+      summary: Update the status of a blog post
+      description: |
+        Admin only. Accepts or rejects a pending blog post.
+        Accepted posts become publicly visible on the blog. (F14, F15, US15)
+      security:
+        - sessionAuth: []
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [published, rejected]
+                  example: published
+      responses:
+        "200":
+          description: Status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─────────────────────────────────────────
+  # BLOG — USER DASHBOARD
+  # ─────────────────────────────────────────
+
+  /dashboard/posts:
+    get:
+      tags: [Blog]
+      summary: Retrieve the current user's own blog posts
+      description: |
+        Returns all posts submitted by the authenticated user, including all statuses
+        (pending, published, rejected). Used to display the user dashboard. (US13, US14)
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: List of the user's own posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ─────────────────────────────────────────
+  # ADMIN
+  # ─────────────────────────────────────────
+
+  /admin/posts:
+    get:
+      tags: [Admin]
+      summary: Retrieve all blog posts for moderation
+      description: |
+        Admin only. Returns all posts across all statuses (pending, published, rejected),
+        sorted by date descending. Optionally filter by status. Used to populate the admin panel. (F14, US14)
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filter posts by status
+          schema:
+            type: string
+            enum: [pending, published, rejected]
+      responses:
+        "200":
+          description: List of all posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /admin/posts/{id}:
+    delete:
+      tags: [Admin]
+      summary: Delete any blog post (admin only)
+      description: |
+        Admin only. Removes any post from the database regardless of status.
+        Used to remove inappropriate or unwanted content. (US18)
+      security:
+        - sessionAuth: []
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      responses:
+        "200":
+          description: Post deleted successfully
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  
+  /admin/users/{id}/posts:
+    delete:
+      tags: [ Admin ]
+      summary: Delete all blog posts by user (admin only)
+      description: |
+        Admin only. Removes all posts by user from the database regardless of status.
+        Used to remove inappropriate or unwanted content. (US18)
+      security:
+        - sessionAuth: [ ]
+      parameters:
+        - $ref: "#/components/parameters/UserId"
+      responses:
+        "200":
+          description: Posts deleted successfully for user {id}
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─────────────────────────────────────────
+  # PROJECTS
+  # ─────────────────────────────────────────
+
+  /projects:
+    get:
+      tags: [Projects]
+      summary: Retrieve all projects
+      description: |
+        Returns all projects sorted by sort_order ascending, including associated
+        technologies and images. Used to render the projects section and cards. (F04, F10, US07)
+      responses:
+        "200":
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+
+    post:
+      tags: [Projects]
+      summary: Create a new project
+      description: |
+        Admin only. Adds a new project to the database. Technologies are stored as a string array on the project. (US07, Casus Backend)
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectInput"
+      responses:
+        "201":
+          description: Project created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+
+  /projects/{id}:
+    get:
+      tags: [Projects]
+      summary: Retrieve a single project by ID
+      description: Returns full project details including images and technologies. Used for the project modal. (F06, US02)
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      responses:
+        "200":
+          description: Project found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    put:
+      tags: [Projects]
+      summary: Update an existing project
+      description: Admin only. Replaces all fields of an existing project. (US07, Casus Backend)
+      security:
+        - sessionAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectInput"
+      responses:
+        "200":
+          description: Project updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+    delete:
+      tags: [Projects]
+      summary: Delete a project
+      description: Admin only. Removes a project and its associated images and technology links. (US07, Casus Backend)
+      security:
+        - sessionAuth: []
+      parameters:
+        - $ref: "#/components/parameters/ProjectId"
+      responses:
+        "200":
+          description: Project deleted successfully
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ─────────────────────────────────────────
+  # CONTACT
+  # ─────────────────────────────────────────
+
+  /contact:
+    post:
+      tags: [Contact]
+      summary: Send a contact message
+      description: Saves the message to the database and returns a confirmation. No authentication required. (F08, US05)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, message]
+              properties:
+                name:
+                  type: string
+                  example: Recruiter Name
+                email:
+                  type: string
+                  format: email
+                  example: recruiter@company.com
+                message:
+                  type: string
+                  example: I would like to get in touch about a position...
+      responses:
+        "200":
+          description: Message received successfully
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+components:
+
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: next-auth.session-token
+      description: NextAuth.js session cookie. Set automatically after login.
+
+  parameters:
+    PostId:
+      name: id
+      in: path
+      required: true
+      description: UUID of the blog post
+      schema:
+        type: string
+        format: uuid
+        example: 3f6b1c2d-8e4a-4f9b-bc3d-1a2e3f4c5d6e
+
+    UserId:
+      name: id
+      in: path
+      required: true
+      description: UUID of the user
+      schema:
+        type: string
+        format: uuid
+        example: 3f6b1c2d-8e4a-4f9b-bc3d-1a2e3f4c5d6e
+
+    ProjectId:
+      name: id
+      in: path
+      required: true
+      description: UUID of the project
+      schema:
+        type: string
+        format: uuid
+        example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+
+  responses:
+    BadRequest:
+      description: Invalid input — missing required fields or validation failure
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: "Missing required fields or validation failure"
+    Unauthorized:
+      description: Not authenticated — no valid session cookie present
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: "Not authenticated — no valid session"
+    Forbidden:
+      description: Authenticated but insufficient role (requires admin)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: "Admin access required"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error: "Resource not found"
+
+  schemas:
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "An error occurred"
+
+    UserPublic:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Jari Dijk
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [user, admin]
+        created_at:
+          type: string
+          format: date-time
+
+    BlogPost:
+      type: object
+      description: Full blog post including status. Used in dashboard and admin panel.
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: My first blog post
+        slug:
+          type: string
+          example: my-first-blog-post
+        content:
+          type: string
+        status:
+          type: string
+          enum: [pending, published, rejected]
+          example: pending
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        user_id:
+          type: string
+          format: uuid
+        author:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Jari Dijk
+
+    BlogPostPublic:
+      type: object
+      description: Published blog post visible to all visitors. Includes author name.
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: My first blog post
+        slug:
+          type: string
+          example: my-first-blog-post
+        content:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        author:
+          type: object
+          properties:
+            name:
+              type: string
+              example: Jari Dijk
+
+    Project:
+      type: object
+      description: Full project including technologies and images.
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Portfolio Website
+        slug:
+          type: string
+          example: portfolio-website
+        description:
+          type: string
+        problem:
+          type: string
+          nullable: true
+        approach:
+          type: string
+          nullable: true
+        role:
+          type: string
+          nullable: true
+        thumbnail_url:
+          type: string
+          nullable: true
+          example: https://example.com/images/thumb.png
+        demo_url:
+          type: string
+          nullable: true
+        repo_url:
+          type: string
+          nullable: true
+        year:
+          type: integer
+          nullable: true
+          example: 2025
+        sort_order:
+          type: integer
+          example: 1
+        technologies:
+          type: array
+          items:
+            type: string
+          example: [Next.js, TypeScript, PostgreSQL]
+        images:
+          type: array
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                example: https://example.com/images/screenshot.png
+              alt_text:
+                type: string
+                nullable: true
+                example: Screenshot of the homepage
+              sort_order:
+                type: integer
+                example: 0
+
+    ProjectInput:
+      type: object
+      description: Request body for creating or updating a project.
+      required: [title, description]
+      properties:
+        title:
+          type: string
+          example: Portfolio Website
+        description:
+          type: string
+        problem:
+          type: string
+          nullable: true
+        approach:
+          type: string
+          nullable: true
+        role:
+          type: string
+          nullable: true
+        thumbnail_url:
+          type: string
+          nullable: true
+        demo_url:
+          type: string
+          nullable: true
+        repo_url:
+          type: string
+          nullable: true
+        year:
+          type: integer
+          nullable: true
+          example: 2025
+        sort_order:
+          type: integer
+          example: 1
+        technologies:
+          type: array
+          description: Array of technology names stored directly on the project.
+          items:
+            type: string
+          example: [Next.js, TypeScript, PostgreSQL]
+        images:
+          type: array
+          items:
+            type: object
+            required: [url]
+            properties:
+              url:
+                type: string
+              alt_text:
+                type: string
+                nullable: true
+              sort_order:
+                type: integer

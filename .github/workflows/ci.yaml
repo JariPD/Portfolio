@@ -1,0 +1,45 @@
+name: CI
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - run: npm test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - run: npm run lint
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx next typegen
+      - run: npx tsc --noEmit
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with: { node-version-file: '.nvmrc', cache: npm }
+      - run: npm ci
+      - run: npm audit --audit-level=high
