@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 
 const navLinks = [
@@ -9,13 +8,10 @@ const navLinks = [
   { label: "Skills", href: "/#skills" },
   { label: "Projects", href: "/#projects" },
   { label: "Experience", href: "/#experience" },
-  { label: "Blog", href: "/#blog" },
   { label: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {
-  const { data: session } = useSession();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -24,14 +20,6 @@ export default function Header() {
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    if (!dropdownOpen) return;
-    const close = () => setDropdownOpen(false);
-    document.addEventListener("click", close);
-    return () => document.removeEventListener("click", close);
-  }, [dropdownOpen]);
 
   return (
     <header
@@ -94,99 +82,8 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Right side: auth + mobile toggle */}
+        {/* Right side: mobile toggle */}
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          {session?.user ? (
-            <div
-              style={{ position: "relative" }}
-              onClick={(e) => { e.stopPropagation(); setDropdownOpen((o) => !o); }}
-            >
-              <button
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  background: "none",
-                  border: "1.5px solid var(--color-border)",
-                  borderRadius: 6,
-                  padding: "0 12px",
-                  height: 40,
-                  cursor: "pointer",
-                  fontSize: 15,
-                  fontWeight: 500,
-                  color: "var(--color-text)",
-                  fontFamily: "inherit",
-                }}
-              >
-                <span
-                  style={{
-                    width: 28, height: 28, borderRadius: "50%",
-                    background: "var(--color-accent)", color: "#fff",
-                    fontSize: 13, fontWeight: 600,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}
-                >
-                  {session.user.name?.[0]?.toUpperCase() ?? "U"}
-                </span>
-                <span style={{ fontSize: 15 }}>{session.user.name}</span>
-                <span style={{ fontSize: 11, color: "var(--color-gray-text)" }}>▾</span>
-              </button>
-
-              {dropdownOpen && (
-                <div
-                  style={{
-                    position: "absolute", right: 0, top: "calc(100% + 8px)",
-                    minWidth: 180, background: "var(--color-white)",
-                    border: "1px solid var(--color-border)",
-                    borderRadius: 8, boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-                    overflow: "hidden", zIndex: 200,
-                    display: "flex", flexDirection: "column",
-                  }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Link href="/dashboard" style={{ display: "block", padding: "10px 16px", fontSize: 14, color: "var(--color-text)", textDecoration: "none" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-light-gray)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                    onClick={() => setDropdownOpen(false)}>
-                    Dashboard
-                  </Link>
-                  {session.user.role === "admin" && (
-                    <Link href="/admin" style={{ display: "block", padding: "10px 16px", fontSize: 14, color: "var(--color-text)", textDecoration: "none" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-light-gray)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                      onClick={() => setDropdownOpen(false)}>
-                      Admin Panel
-                    </Link>
-                  )}
-                  <button
-                    onClick={() => { setDropdownOpen(false); signOut(); }}
-                    style={{
-                      display: "block", width: "100%", textAlign: "left",
-                      padding: "10px 16px", fontSize: 14, color: "var(--color-error)",
-                      background: "none", border: "none", cursor: "pointer", fontFamily: "inherit",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-light-gray)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                  >
-                    Sign out
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link
-              href="/login"
-              style={{
-                height: 40, padding: "0 16px",
-                background: "var(--color-accent)", color: "#fff",
-                borderRadius: 6, fontSize: 15, fontWeight: 500,
-                display: "inline-flex", alignItems: "center", textDecoration: "none",
-              }}
-            >
-              Sign in
-            </Link>
-          )}
-
           {/* Mobile toggle */}
           <button
             className="mobile-toggle-btn"
