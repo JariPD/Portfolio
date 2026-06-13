@@ -1,0 +1,5 @@
+{
+  "Frontend":       ["Blazor", "MudBlazor", "ApexCharts", "Leaflet", "HTML/CSS", "Tailwind"],
+  "Backend":        ["C#", ".Net", "MongoDB", "REST API"],
+  "Tools & DevOps": ["Git", "GitHub Pages", "Netlify", "Vercel", "Neon"]
+}
