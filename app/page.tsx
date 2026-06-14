@@ -1,16 +1,21 @@
 import Image from "next/image";
 import profile from "@/public/Profile.jpg";
 import profileHover from "@/public/ProfileHover.jpg";
-import { getFeaturedProjects } from "@/lib/projects";
+import { getAllProjects, getFeaturedProjects } from "@/lib/projects";
 import ProjectCard from "@/components/ProjectCard";
 import Button from "@/components/Button";
 import SkillsSection from "@/components/SkillsSection";
 import ContactForm from "@/components/ContactForm";
 import RevealInit from "@/components/RevealInit";
 import ContactLinks from "@/components/ContactLinks";
+import skills from "@/data/skills.json";
 
 export default async function Home() {
   const featured = await getFeaturedProjects();
+
+  // Stats derive from the data sources so they can never drift out of sync.
+  const projectCount = (await getAllProjects()).length;
+  const techCount = new Set(Object.values(skills).flat()).size;
 
   return (
     <main>
@@ -64,10 +69,11 @@ export default async function Home() {
             </div>
             <div className="about-stats reveal">
               {[
-                { num: "2+",   label: "Years experience" },
-                { num: "12+",  label: "Projects completed" },
-                { num: "8+",   label: "Technologies" },
-                { num: "100+", label: "Bugs squashed" },
+                { num: "2+",              label: "Years experience" },
+                { num: `${projectCount}`, label: "Projects" },
+                { num: `${techCount}`,    label: "Technologies" },
+                // 213 Jira + ~40 Zendesk, rounded down so it stays defensible.
+                { num: "250+",            label: "Tickets resolved" },
               ].map(({ num, label }) => (
                 <div key={label} className="stat-box">
                   <div className="stat-number">{num}</div>
