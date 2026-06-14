@@ -1,7 +1,7 @@
 import Image from "next/image";
 import profile from "@/public/Profile.jpg";
 import profileHover from "@/public/ProfileHover.jpg";
-import { getAllProjects } from "@/lib/projects";
+import { getFeaturedProjects } from "@/lib/projects";
 import ProjectCard from "@/components/ProjectCard";
 import Button from "@/components/Button";
 import SkillsSection from "@/components/SkillsSection";
@@ -10,7 +10,7 @@ import RevealInit from "@/components/RevealInit";
 import ContactLinks from "@/components/ContactLinks";
 
 export default async function Home() {
-  const projects = await getAllProjects();
+  const featured = await getFeaturedProjects();
 
   return (
     <main>
@@ -93,13 +93,16 @@ export default async function Home() {
       {/* ── PROJECTS ── */}
       <section id="projects" className="section-gray section">
         <div className="container">
-          <div className="section-heading reveal">
-            <h2>Projects</h2>
-            <p className="text-gray">A selection of projects I&apos;ve built or contributed to.</p>
+          <div className="section-heading reveal" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+            <div>
+              <h2>Projects</h2>
+              <p className="text-gray">A selection of projects I&apos;ve built or contributed to.</p>
+            </div>
+            <Button variant="secondary" href="/projects">View all projects</Button>
           </div>
           <div className="projects-grid">
-            {projects.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} allProjects={projects} />
+            {featured.map((project, i) => (
+              <ProjectCard key={project.id} project={project} index={i} allProjects={featured} />
             ))}
           </div>
         </div>
