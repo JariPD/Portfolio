@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "featured": true,
     "title": "Content Management Dashboard",
     "shortDescription": "A full-featured CMS dashboard for managing articles, authors and publishing workflows built with Blazor and .NET.",
     "tech": ["Blazor", "C#", ".NET", "MongoDB", "REST API"],
@@ -24,6 +25,7 @@
   },
   {
     "id": 2,
+    "featured": true,
     "title": "2D Platformer — Voidrun",
     "shortDescription": "A fast-paced 2D platformer built in Unity with procedurally generated levels, a combo system and online leaderboards.",
     "tech": ["Unity", "C#", "REST API"],
@@ -44,6 +46,7 @@
   },
   {
     "id": 3,
+    "featured": true,
     "title": "Analytics Dashboard",
     "shortDescription": "An interactive data dashboard with real-time charts, filterable tables and export functionality for business reporting.",
     "tech": ["Blazor", "C#", ".NET", "ApexCharts", "MongoDB"],
