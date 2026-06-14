@@ -18,8 +18,8 @@
       "https://picsum.photos/seed/cms-5/800/500",
       "https://picsum.photos/seed/cms-6/800/500"
     ],
-    "demoUrl": "#",
-    "githubUrl": "#",
+    "demoUrl": null,
+    "githubUrl": null,
     "year": 2026,
     "month": 1
   },
@@ -39,8 +39,8 @@
       "https://picsum.photos/seed/voidrun-2/800/500",
       "https://picsum.photos/seed/voidrun-3/800/500"
     ],
-    "demoUrl": "#",
-    "githubUrl": "#",
+    "demoUrl": null,
+    "githubUrl": null,
     "year": 2024,
     "month": 6
   },
@@ -60,8 +60,8 @@
       "https://picsum.photos/seed/analytics-2/800/500",
       "https://picsum.photos/seed/analytics-3/800/500"
     ],
-    "demoUrl": "#",
-    "githubUrl": "#",
+    "demoUrl": null,
+    "githubUrl": null,
     "year": 2025,
     "month": 10
   }

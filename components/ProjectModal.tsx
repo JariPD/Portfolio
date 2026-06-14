@@ -70,8 +70,8 @@ export default function ProjectModal({
     };
   }, [handleKey]);
 
-  const hasDemo = project.demoUrl && project.demoUrl !== "#";
-  const hasGithub = project.githubUrl && project.githubUrl !== "#";
+  const hasDemo = Boolean(project.demoUrl);
+  const hasGithub = Boolean(project.githubUrl);
 
   const thumbImages = project.images.slice(thumbOffset, thumbOffset + THUMB_VISIBLE);
   const canThumbPrev = thumbOffset > 0;
