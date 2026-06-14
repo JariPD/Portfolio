@@ -84,7 +84,7 @@ export default async function Home() {
         <div className="container">
           <div className="section-heading reveal">
             <h2>Skills</h2>
-            <p className="text-gray">Technologies and tools I work with on a daily basis.</p>
+            <p className="text-gray">Technologies and tools I work with.</p>
           </div>
           <SkillsSection />
         </div>

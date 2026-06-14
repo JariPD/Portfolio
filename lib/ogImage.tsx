@@ -43,7 +43,7 @@ export default async function ogImage() {
             Jari Dijk
           </div>
           <div style={{ fontSize: 28, color: GRAY_TEXT, marginTop: 20, lineHeight: 1.4 }}>
-            Modern web apps, dashboards &amp; interactive experiences.
+            Modern web apps, dashboards &amp; intuitive user interfaces.
           </div>
           <div style={{ display: "flex", gap: 12, marginTop: 36 }}>
             {TAGS.map((tag) => (
