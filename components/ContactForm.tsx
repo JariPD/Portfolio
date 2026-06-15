@@ -16,6 +16,8 @@ function fieldStyle(error?: string, success?: boolean) {
 
 export default function ContactForm() {
   const [values, setValues] = useState({ name: "", email: "", message: "" });
+  // Honeypot: hidden field real users never fill. Bots auto-fill it → server drops the message.
+  const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [success, setSuccess] = useState(false);
@@ -55,7 +57,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, website: honeypot }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -85,6 +87,19 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
+      {/* Honeypot — offscreen, hidden from real users & assistive tech. Bots fill it. */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
       {(["name", "email", "message"] as const).map((field) => (
         <div key={field} className="form-field">
           <label htmlFor={`contact-${field}`} className="form-label">
