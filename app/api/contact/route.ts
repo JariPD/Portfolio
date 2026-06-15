@@ -6,7 +6,13 @@ const escape = (s: string) =>
 
 export async function POST(request: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
-  const { name, email, message } = await request.json();
+  const { name, email, message, website } = await request.json();
+
+  // Honeypot: real users never fill `website`. If filled, drop silently (fake success — no signal to bot).
+  if (website) {
+    console.warn("Contact honeypot triggered, dropping submission");
+    return NextResponse.json({ success: true });
+  }
 
   if (!name || !email || !message) {
     return NextResponse.json({ error: "All fields are required." }, { status: 400 });
