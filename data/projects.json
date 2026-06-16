@@ -10,13 +10,13 @@
     "role": "Full-stack developer — responsible for the full architecture, API design, MongoDB schema and Blazor component library.",
     "color": "#3182CE",
     "thumbnail": "https://picsum.photos/seed/cms-thumb/800/450",
-    "images": [
-      "https://picsum.photos/seed/cms-1/800/500",
-      "https://picsum.photos/seed/cms-2/800/500",
-      "https://picsum.photos/seed/cms-3/800/500",
-      "https://picsum.photos/seed/cms-4/800/500",
-      "https://picsum.photos/seed/cms-5/800/500",
-      "https://picsum.photos/seed/cms-6/800/500"
+    "media": [
+      { "type": "image", "src": "https://picsum.photos/seed/cms-1/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/cms-2/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/cms-3/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/cms-4/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/cms-5/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/cms-6/800/500" }
     ],
     "demoUrl": null,
     "githubUrl": null,
@@ -34,10 +34,12 @@
     "role": "Solo developer — game design, all Unity systems, procedural generation algorithm and backend leaderboard API.",
     "color": "#744210",
     "thumbnail": "https://picsum.photos/seed/voidrun-thumb/800/450",
-    "images": [
-      "https://picsum.photos/seed/voidrun-1/800/500",
-      "https://picsum.photos/seed/voidrun-2/800/500",
-      "https://picsum.photos/seed/voidrun-3/800/500"
+    "media": [
+      { "type": "image", "src": "https://picsum.photos/seed/voidrun-1/800/500" },
+      { "type": "video", "src": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4", "poster": "https://picsum.photos/seed/voidrun-clip/800/500", "loop": true, "autoPlay": true },
+      { "type": "embed", "provider": "youtube", "id": "aqz-KE-bpKQ", "title": "Voidrun gameplay" },
+      { "type": "image", "src": "https://picsum.photos/seed/voidrun-2/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/voidrun-3/800/500" }
     ],
     "demoUrl": null,
     "githubUrl": null,
@@ -55,10 +57,10 @@
     "role": "Full-stack developer — API design, MongoDB aggregation pipelines, Blazor component architecture and ApexCharts integration.",
     "color": "#38A169",
     "thumbnail": "https://picsum.photos/seed/analytics-thumb/800/450",
-    "images": [
-      "https://picsum.photos/seed/analytics-1/800/500",
-      "https://picsum.photos/seed/analytics-2/800/500",
-      "https://picsum.photos/seed/analytics-3/800/500"
+    "media": [
+      { "type": "image", "src": "https://picsum.photos/seed/analytics-1/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/analytics-2/800/500" },
+      { "type": "image", "src": "https://picsum.photos/seed/analytics-3/800/500" }
     ],
     "demoUrl": null,
     "githubUrl": null,

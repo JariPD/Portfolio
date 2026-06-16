@@ -1,5 +1,13 @@
 import projectsData from '@/data/projects.json'
 
+// Discriminated union for project gallery media. `image` = next/image, `video` =
+// self-hosted file, `embed` = external platform (YouTube/Vimeo). New variants drop
+// in here without touching call sites.
+export type MediaItem =
+  | { type: 'image'; src: string; alt?: string }
+  | { type: 'video'; src: string; poster: string; alt?: string; loop?: boolean; autoPlay?: boolean }
+  | { type: 'embed'; provider: 'youtube' | 'vimeo'; id: string; poster?: string; title?: string }
+
 export type Project = {
   id: number
   title: string
@@ -9,7 +17,7 @@ export type Project = {
   approach: string | null
   role: string | null
   thumbnail: string | null
-  images: string[]
+  media: MediaItem[]
   demoUrl: string | null
   githubUrl: string | null
   year: number | null
@@ -17,10 +25,24 @@ export type Project = {
   featured?: boolean
 }
 
+// Thumbnail/poster image for a media item, used by the gallery thumb strip.
+// YouTube exposes a static thumbnail by video id; Vimeo needs an explicit poster.
+export function mediaThumb(item: MediaItem): string {
+  switch (item.type) {
+    case 'image':
+      return item.src
+    case 'video':
+      return item.poster
+    case 'embed':
+      return item.poster ?? (item.provider === 'youtube' ? `https://img.youtube.com/vi/${item.id}/hqdefault.jpg` : '')
+  }
+}
+
 // Data-access boundary (repository). Reads the static JSON source today; swapping
 // to a real API later only changes this file. Newest projects first.
 export async function getAllProjects(): Promise<Project[]> {
-  const projects = projectsData as Project[]
+  // JSON imports widen the `media[].type` literals to `string`, so cast through unknown.
+  const projects = projectsData as unknown as Project[]
   return [...projects].sort((a, b) => {
     const byYear = (b.year ?? 0) - (a.year ?? 0)
     if (byYear !== 0) return byYear

@@ -9,7 +9,7 @@ const make = (id: number, featured: boolean): Project => ({
   approach: null,
   role: null,
   thumbnail: null,
-  images: [],
+  media: [],
   demoUrl: null,
   githubUrl: null,
   year: null,
