@@ -4,9 +4,14 @@ import { useEffect, useCallback, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import type { Project } from "@/lib/projects";
+import { mediaThumb } from "@/lib/projects";
 import { formatProjectDate } from "@/lib/format";
+import MediaVideo from "./media/MediaVideo";
+import MediaEmbed from "./media/MediaEmbed";
 
 const THUMB_VISIBLE = 5;
+const MEDIA_RADIUS = 6; // px — gallery viewport + corner-mask radius (kept in sync)
+const SLIDE_GAP = 16; // px — transparent gutter between slides; absorbs Embla's sub-pixel snap
 
 export default function ProjectModal({
   allProjects,
@@ -73,9 +78,10 @@ export default function ProjectModal({
   const hasDemo = Boolean(project.demoUrl);
   const hasGithub = Boolean(project.githubUrl);
 
-  const thumbImages = project.images.slice(thumbOffset, thumbOffset + THUMB_VISIBLE);
+  const media = project.media;
+  const thumbItems = media.slice(thumbOffset, thumbOffset + THUMB_VISIBLE);
   const canThumbPrev = thumbOffset > 0;
-  const canThumbNext = thumbOffset + THUMB_VISIBLE < project.images.length;
+  const canThumbNext = thumbOffset + THUMB_VISIBLE < media.length;
 
   const navBtn = (style?: React.CSSProperties): React.CSSProperties => ({
     width: 28, height: 40, border: "1px solid var(--color-border)",
@@ -166,26 +172,45 @@ export default function ProjectModal({
         <div className="modal-body-grid">
           {/* Gallery */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {/* Embla main image */}
+            {/* Embla viewport. overflow:hidden + border-radius genuinely rounds same-process
+                content (image, <video>). The iframe is composited as its own layer that
+                Firefox 151 refuses to clip on the bottom corners by ANY CSS method (tested:
+                border-radius, clip-path, overflow — on the iframe or any ancestor); the
+                corner-mask overlay below is the only cross-browser fix. Viewport background
+                matches the modal so any sub-pixel sliver between slides reads as background. */}
             <div
               ref={emblaRef}
               style={{
-                width: "100%", aspectRatio: "16/10", borderRadius: 6, overflow: "hidden",
-                background: "linear-gradient(135deg, var(--color-light-gray) 0%, var(--color-border) 100%)",
+                position: "relative",
+                width: "100%", aspectRatio: "16/9", overflow: "hidden",
+                borderRadius: MEDIA_RADIUS, background: "var(--color-white)",
               }}
             >
-              {project.images.length > 0 ? (
-                <div style={{ display: "flex", height: "100%" }}>
-                  {project.images.map((src, i) => (
-                    <div key={i} style={{ flex: "0 0 100%", minWidth: 0, position: "relative", height: "100%" }}>
-                      <Image
-                        src={src}
-                        alt={`${project.title} screenshot ${i + 1}`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="modal-main-img"
-                        priority={i === 0}
-                      />
+              {media.length > 0 ? (
+                // Embla's slide-gap pattern: the gap is transparent padding INSIDE each
+                // border-box slide (container offsets it with a negative margin). Embla rounds
+                // the px track transform against fractional slide widths, so the snap can land
+                // ~0.5px off — but that error now falls in the transparent gutter, not over the
+                // neighbour's media. Media renders on the inner slide-content element.
+                <div style={{ display: "flex", height: "100%", marginLeft: -SLIDE_GAP }}>
+                  {media.map((item, i) => (
+                    <div key={i} style={{ flex: "0 0 100%", minWidth: 0, height: "100%", paddingLeft: SLIDE_GAP, boxSizing: "border-box" }}>
+                      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                        {item.type === "image" ? (
+                          <Image
+                            src={item.src}
+                            alt={item.alt ?? `${project.title} screenshot ${i + 1}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="modal-main-img"
+                            preload={i === 0}
+                          />
+                        ) : item.type === "video" ? (
+                          <MediaVideo {...item} isActive={i === selectedImage} />
+                        ) : (
+                          <MediaEmbed item={item} isActive={i === selectedImage} />
+                        )}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -196,10 +221,19 @@ export default function ProjectModal({
                   </span>
                 </div>
               )}
+
+              {/* Corner-mask: transparent rounded rect whose large outset box-shadow paints the
+                  modal background into the four corner triangles; the viewport's overflow:hidden
+                  clips the shadow to the square edges. Faked corners, but the only method that
+                  survives Firefox over the iframe. pointer-events:none keeps controls clickable. */}
+              <div aria-hidden style={{
+                position: "absolute", inset: 0, pointerEvents: "none", zIndex: 2,
+                borderRadius: MEDIA_RADIUS, boxShadow: "0 0 0 9999px var(--color-white)",
+              }} />
             </div>
 
             {/* Thumbnail strip with navigation */}
-            {project.images.length > 1 && (
+            {media.length > 1 && (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 {/* Left arrow */}
                 <button
@@ -215,25 +249,33 @@ export default function ProjectModal({
 
                 {/* Visible thumbnails */}
                 <div style={{ display: "flex", gap: 8, flex: 1 }}>
-                  {thumbImages.map((src, i) => {
+                  {thumbItems.map((item, i) => {
                     const globalIndex = thumbOffset + i;
                     return (
                       <div
                         key={globalIndex}
                         onClick={() => { emblaApi?.scrollTo(globalIndex); setSelectedImage(globalIndex); }}
                         style={{
-                          flex: "1 1 0", height: 40, borderRadius: 4, overflow: "hidden", cursor: "pointer",
+                          flex: "1 1 0", aspectRatio: "16/9", borderRadius: 4, overflow: "hidden", cursor: "pointer",
                           border: globalIndex === selectedImage ? "2px solid var(--color-accent)" : "2px solid var(--color-border)",
                           transition: "border-color 0.15s", position: "relative",
                         }}
                       >
-                        <Image src={src} alt={`${project.title} thumbnail ${globalIndex + 1}`} fill sizes="80px" className="modal-thumb-img" />
+                        <Image src={mediaThumb(item)} alt={`${project.title} thumbnail ${globalIndex + 1}`} fill sizes="80px" className="modal-thumb-img" />
+                        {item.type !== "image" && (
+                          <span aria-hidden="true" style={{
+                            position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+                            background: "rgba(0,0,0,0.35)", color: "#fff", fontSize: 11,
+                          }}>
+                            ▶
+                          </span>
+                        )}
                       </div>
                     );
                   })}
-                  {/* Fill empty slots when fewer than THUMB_VISIBLE images are visible */}
-                  {thumbImages.length < THUMB_VISIBLE && Array.from({ length: THUMB_VISIBLE - thumbImages.length }).map((_, i) => (
-                    <div key={`empty-${i}`} style={{ flex: "1 1 0", height: 40 }} />
+                  {/* Fill empty slots when fewer than THUMB_VISIBLE items are visible */}
+                  {thumbItems.length < THUMB_VISIBLE && Array.from({ length: THUMB_VISIBLE - thumbItems.length }).map((_, i) => (
+                    <div key={`empty-${i}`} style={{ flex: "1 1 0", aspectRatio: "16/9" }} />
                   ))}
                 </div>
 
