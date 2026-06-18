@@ -37,3 +37,10 @@ next-env.d.ts
 
 # local planning docs (specs/plans kept out of git)
 docs/
+
+# markdown files (kept local, not tracked)
+*.md
+
+# IDE / editor (JetBrains Rider, VS Code, etc.)
+/.idea/
+/.vscode/
