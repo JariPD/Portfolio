@@ -8,7 +8,7 @@
   --color-light-gray: #F7FAFC;
   --color-dark-gray:  #2D3748;
   --color-text:       #2D3748;
-  --color-gray-text:  #718096;
+  --color-gray-text:  #5A6678;
   --color-border:     #E2E8F0;
   --color-success:    #38A169;
   --color-error:      #E53E3E;
@@ -629,6 +629,31 @@ a.post-title:hover { color: var(--color-accent); text-decoration: underline; }
 /* ── Reveal scroll animation ────────────────────────────────────────────── */
 .reveal         { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Progressive enhancement — if JavaScript is disabled the IntersectionObserver in
+   RevealInit never runs, so reveal the content unconditionally instead of leaving the
+   page blank at opacity:0. The <noscript> block in app/layout.tsx injects this. */
+
+/* ── Reduced motion ─────────────────────────────────────────────────────────
+   Respect prefers-reduced-motion — show reveal content immediately and strip
+   smooth scrolling, transforms, and animated transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal,
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
 /* ── Responsive breakpoints ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {

@@ -64,6 +64,10 @@ export default function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        {/* Without JS the reveal observer never runs, so make hidden sections visible. */}
+        <noscript>
+          <style>{`.reveal{opacity:1 !important;transform:none !important}`}</style>
+        </noscript>
       </body>
     </html>
   );

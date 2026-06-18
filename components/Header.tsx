@@ -88,7 +88,9 @@ export default function Header() {
           <button
             className="mobile-toggle-btn"
             onClick={() => setMobileOpen((o) => !o)}
-            aria-label="Open menu"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
             style={{
               display: "none",
               flexDirection: "column", justifyContent: "center",
@@ -106,6 +108,7 @@ export default function Header() {
       {/* Mobile nav dropdown */}
       {mobileOpen && (
         <div
+          id="mobile-nav"
           className="mobile-nav"
           style={{
             position: "fixed", top: "var(--header-height)", left: 0, right: 0,
