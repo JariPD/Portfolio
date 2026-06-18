@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import type { Project } from "@/lib/projects";
@@ -26,6 +26,7 @@ export default function ProjectModal({
   const [selectedImage, setSelectedImage] = useState(0);
   const [thumbOffset, setThumbOffset] = useState(0);
   const project = allProjects[currentIndex];
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
 
@@ -62,6 +63,23 @@ export default function ProjectModal({
         setCurrentIndex((i) => i + 1);
       if (e.key === "ArrowLeft" && currentIndex > 0)
         setCurrentIndex((i) => i - 1);
+      // Focus trap: keep Tab cycling inside the dialog so keyboard users can't tab
+      // out behind the modal.
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     },
     [onClose, currentIndex, allProjects.length]
   );
@@ -74,6 +92,13 @@ export default function ProjectModal({
       document.body.style.overflow = "";
     };
   }, [handleKey]);
+
+  // Move focus into the dialog on open and restore it to the trigger on close.
+  useEffect(() => {
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    dialogRef.current?.focus();
+    return () => previouslyFocused?.focus?.();
+  }, []);
 
   const hasDemo = Boolean(project.demoUrl);
   const hasGithub = Boolean(project.githubUrl);
@@ -101,11 +126,17 @@ export default function ProjectModal({
       onClick={onClose}
     >
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={project.title}
+        tabIndex={-1}
         style={{
           background: "var(--color-white)", borderRadius: 12,
           maxWidth: 900, width: "100%", maxHeight: "90vh",
           overflowY: "auto", position: "relative",
           boxShadow: "0 16px 64px rgba(0,0,0,0.25)",
+          outline: "none",
         }}
         onClick={(e) => e.stopPropagation()}
       >
