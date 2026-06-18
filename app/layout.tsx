@@ -11,10 +11,30 @@ const SITE_URL = "https://jaridijk.nl";
 const TITLE = "Jari Dijk — Developer";
 const DESCRIPTION = "Portfolio of Jari Dijk, full-stack developer based in Den Haag.";
 
+// Person structured data (schema.org) for richer search results. Static, trusted content
+// only — JSON.stringify keeps it valid JSON; this is the documented Next.js JSON-LD pattern.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jari Dijk",
+  jobTitle: "Full-Stack Developer",
+  url: SITE_URL,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Den Haag",
+    addressCountry: "NL",
+  },
+  sameAs: [
+    "https://github.com/JariPD",
+    "https://www.linkedin.com/in/jari-dijk-59012a250/",
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: TITLE,
   description: DESCRIPTION,
+  alternates: { canonical: "/" },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
@@ -36,6 +56,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className} suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <Header />
         {children}
         <Analytics />

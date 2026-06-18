@@ -7,6 +7,7 @@ import RevealInit from "@/components/RevealInit";
 export const metadata: Metadata = {
   title: "Projects — Jari Dijk",
   description: "All projects by Jari Dijk, full-stack developer based in The Hague.",
+  alternates: { canonical: "/projects" },
 };
 
 export default async function ProjectsPage() {
@@ -24,7 +25,7 @@ export default async function ProjectsPage() {
             >
               ← Back to home
             </Link>
-            <h2 style={{ marginTop: 12 }}>All Projects</h2>
+            <h1 style={{ marginTop: 12 }}>All Projects</h1>
             <p className="text-gray">Everything I&apos;ve built or contributed to.</p>
           </div>
           <div className="projects-grid">
