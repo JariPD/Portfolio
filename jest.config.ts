@@ -6,9 +6,7 @@ const createJestConfig = nextJest({ dir: "./" });
 const config: Config = {
   testEnvironment: "jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
-  // __tests__/seed/ bevat handmatige tets om een project aan te maken voor mij
-  // (geen mocks). Die horen niet in de unit-testrun.
-  testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/__tests__/seed/"],
+  testPathIgnorePatterns: ["<rootDir>/node_modules/"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },

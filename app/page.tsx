@@ -9,6 +9,7 @@ import ContactForm from "@/components/ContactForm";
 import RevealInit from "@/components/RevealInit";
 import ContactLinks from "@/components/ContactLinks";
 import skills from "@/data/skills.json";
+import experience from "@/data/experience.json";
 
 export default async function Home() {
   const featured = await getFeaturedProjects();
@@ -69,11 +70,12 @@ export default async function Home() {
             </div>
             <div className="about-stats reveal">
               {[
-                { num: "2+",              label: "Years experience" },
-                { num: `${projectCount}`, label: "Projects" },
-                { num: `${techCount}`,    label: "Technologies" },
-                // 213 Jira + ~40 Zendesk, rounded down so it stays defensible.
-                { num: "250+",            label: "Tickets resolved" },
+                // Static stats live in data/experience.json; project/tech counts derive from
+                // their data sources above so they can never drift out of sync.
+                { num: experience.stats.yearsExperience, label: "Years experience" },
+                { num: `${projectCount}`,                label: "Projects" },
+                { num: `${techCount}`,                   label: "Technologies" },
+                { num: experience.stats.ticketsResolved, label: "Tickets resolved" },
               ].map(({ num, label }) => (
                 <div key={label} className="stat-box">
                   <div className="stat-number">{num}</div>
@@ -128,12 +130,7 @@ export default async function Home() {
           </div>
 
           <div className="timeline">
-            {[
-              { type: "work", role: "Junior Full-Stack Developer",  org: "Pubble — Weesp",                       period: "Jan 2025 – present",   desc: "Development of publishing and content management systems using C#, .NET and Blazor." },
-              { type: "edu",  role: "HBO ICT Software Development", org: "De Haagse Hogeschool — The Hague",  period: "Sep 2024 – present",   desc: "Full-time bachelor's programme focused on full-stack web development, software architecture and agile methodologies." },
-              { type: "work", role: "Unity Development Intern",     org: "GamePoint — The Hague",               period: "Oct 2023 – Jan 2024",  desc: "Internship as part of my MBO programme. Worked on GamePoint Unity projects covering both front- and back-end." },
-              { type: "edu",  role: "MBO 4 Game Development",     org: "Grafisch Lyceum Utrecht — Utrecht",   period: "Sep 2021 – Jul 2024",  desc: "Game development study focused on development, scrum and design." },
-            ].map((item, idx) => (
+            {experience.timeline.map((item, idx) => (
               <div key={idx} className="timeline-item reveal">
                 <div className={`timeline-dot${item.type === "edu" ? " dot-edu" : ""}`} />
                 <div className="timeline-card">

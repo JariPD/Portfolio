@@ -1,13 +1,10 @@
 import Link from "next/link";
 
-type Variant = "primary" | "secondary" | "danger" | "success" | "outline";
+type Variant = "primary" | "secondary";
 
 const variantClass: Record<Variant, string> = {
   primary: "btn-primary",
   secondary: "btn-secondary",
-  danger: "btn-danger",
-  success: "btn-success",
-  outline: "btn-outline",
 };
 
 interface ButtonProps {

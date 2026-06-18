@@ -1,0 +1,36 @@
+{
+  "stats": {
+    "yearsExperience": "2+",
+    "ticketsResolved": "250+"
+  },
+  "timeline": [
+    {
+      "type": "work",
+      "role": "Junior Full-Stack Developer",
+      "org": "Pubble — Weesp",
+      "period": "Jan 2025 – present",
+      "desc": "Development of publishing and content management systems using C#, .NET and Blazor."
+    },
+    {
+      "type": "edu",
+      "role": "HBO ICT Software Development",
+      "org": "De Haagse Hogeschool — The Hague",
+      "period": "Sep 2024 – present",
+      "desc": "Full-time bachelor's programme focused on full-stack web development, software architecture and agile methodologies."
+    },
+    {
+      "type": "work",
+      "role": "Unity Development Intern",
+      "org": "GamePoint — The Hague",
+      "period": "Oct 2023 – Jan 2024",
+      "desc": "Internship as part of my MBO programme. Worked on GamePoint Unity projects covering both front- and back-end."
+    },
+    {
+      "type": "edu",
+      "role": "MBO 4 Game Development",
+      "org": "Grafisch Lyceum Utrecht — Utrecht",
+      "period": "Sep 2021 – Jul 2024",
+      "desc": "Game development study focused on development, scrum and design."
+    }
+  ]
+}
