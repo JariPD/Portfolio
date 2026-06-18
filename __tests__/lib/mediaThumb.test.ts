@@ -13,7 +13,7 @@ describe("mediaThumb", () => {
 
   test("derives the YouTube thumbnail from the video id when no poster is set", () => {
     const item: MediaItem = { type: "embed", provider: "youtube", id: "abc123" };
-    expect(mediaThumb(item)).toBe("https://img.youtube.com/vi/abc123/hqdefault.jpg");
+    expect(mediaThumb(item)).toBe("https://img.youtube.com/vi/abc123/maxresdefault.jpg");
   });
 
   test("prefers an explicit poster over the derived YouTube thumbnail", () => {

@@ -53,7 +53,7 @@ export default function MediaEmbed({
       aria-label={`Play ${label}`}
       style={{
         width: "100%", height: "100%", padding: 0, border: 0, cursor: "pointer",
-        position: "relative", background: "#000", display: "flex",
+        position: "relative", background: "transparent", display: "flex",
         alignItems: "center", justifyContent: "center",
       }}
     >

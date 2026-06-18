@@ -13,7 +13,9 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data: https://img.youtube.com https://i.ytimg.com",
   "font-src 'self'",
-  "media-src 'self' blob:",
+  // TEMP: test-videos.co.uk is the sample-clip host for demo placeholders — drop it here
+  // (and self-host real clips, covered by 'self') with the rest of the placeholder assets.
+  "media-src 'self' blob: https://test-videos.co.uk",
   "frame-src https://www.youtube-nocookie.com https://player.vimeo.com",
   "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
   "object-src 'none'",

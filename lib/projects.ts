@@ -27,6 +27,8 @@ export type Project = {
 
 // Thumbnail/poster image for a media item, used by the gallery thumb strip.
 // YouTube exposes a static thumbnail by video id; Vimeo needs an explicit poster.
+// Use maxresdefault (native 16:9, high-res) rather than hqdefault, which is a 4:3
+// image with baked-in black letterbox bars that object-fit:cover can't fully crop.
 export function mediaThumb(item: MediaItem): string {
   switch (item.type) {
     case 'image':
@@ -34,7 +36,7 @@ export function mediaThumb(item: MediaItem): string {
     case 'video':
       return item.poster
     case 'embed':
-      return item.poster ?? (item.provider === 'youtube' ? `https://img.youtube.com/vi/${item.id}/hqdefault.jpg` : '')
+      return item.poster ?? (item.provider === 'youtube' ? `https://img.youtube.com/vi/${item.id}/maxresdefault.jpg` : '')
   }
 }
 

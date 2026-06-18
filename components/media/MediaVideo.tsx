@@ -41,7 +41,7 @@ export default function MediaVideo({
       playsInline
       preload="none"
       aria-label={alt}
-      style={{ width: "100%", height: "100%", objectFit: "cover", background: "#000", display: "block" }}
+      style={{ width: "100%", height: "100%", objectFit: "cover", background: "transparent", display: "block" }}
     >
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
