@@ -40,6 +40,8 @@ docs/
 
 # markdown files (kept local, not tracked)
 *.md
+# …except the public README, which a portfolio repo should ship with.
+!README.md
 
 # IDE / editor (JetBrains Rider, VS Code, etc.)
 /.idea/

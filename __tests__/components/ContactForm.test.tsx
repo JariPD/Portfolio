@@ -4,7 +4,7 @@ import ContactForm from "@/components/ContactForm";
 
 global.fetch = jest.fn();
 
-describe("ContactForm — validatie", () => {
+describe("ContactForm — validation", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -14,35 +14,35 @@ describe("ContactForm — validatie", () => {
     await userEvent.click(screen.getByRole("button", { name: /send message/i }));
   }
 
-  test("Foutmelding bij ontbrekend naam", async () => {
+  test("shows an error when the name is missing", async () => {
     await submitEmptyForm();
     expect(
       screen.getByText(/please enter your name/i)
     ).toBeInTheDocument();
   });
 
-  test("Foutmelding bij ontbrekend e-mailadres", async () => {
+  test("shows an error when the email is missing", async () => {
     await submitEmptyForm();
     expect(
       screen.getByText(/please enter a valid email address/i)
     ).toBeInTheDocument();
   });
 
-  test("Foutmelding bij ontbrekend bericht", async () => {
+  test("shows an error when the message is missing", async () => {
     await submitEmptyForm();
     expect(
       screen.getByText(/please enter your message/i)
     ).toBeInTheDocument();
   });
 
-  test("Foutmelding bij ongeldig e-mailadres", async () => {
+  test("shows an error for an invalid email address", async () => {
     render(<ContactForm />);
 
     await userEvent.type(screen.getByLabelText(/name/i), "Jan Jansen");
-    await userEvent.type(screen.getByLabelText(/email/i), "geen-geldig-email");
+    await userEvent.type(screen.getByLabelText(/email/i), "not-a-valid-email");
     await userEvent.type(
       screen.getByLabelText(/message/i),
-      "Dit is een testbericht met genoeg tekst."
+      "This is a test message with enough text."
     );
     await userEvent.click(screen.getByRole("button", { name: /send message/i }));
 
@@ -52,7 +52,7 @@ describe("ContactForm — validatie", () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
-  test("Geen fetch bij ongeldige invoer", async () => {
+  test("does not call fetch on invalid input", async () => {
     await submitEmptyForm();
     expect(fetch).not.toHaveBeenCalled();
   });
