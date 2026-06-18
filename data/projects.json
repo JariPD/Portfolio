@@ -36,7 +36,7 @@
     "thumbnail": "https://picsum.photos/seed/voidrun-thumb/800/450",
     "media": [
       { "type": "image", "src": "https://picsum.photos/seed/voidrun-1/800/500" },
-      { "type": "video", "src": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4", "poster": "https://picsum.photos/seed/voidrun-clip/800/500", "loop": true, "autoPlay": true },
+      { "type": "video", "src": "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_2MB.mp4", "poster": "https://picsum.photos/seed/voidrun-clip/800/500", "loop": true, "autoPlay": true },
       { "type": "embed", "provider": "youtube", "id": "aqz-KE-bpKQ", "title": "Voidrun gameplay" },
       { "type": "image", "src": "https://picsum.photos/seed/voidrun-2/800/500" },
       { "type": "image", "src": "https://picsum.photos/seed/voidrun-3/800/500" }
