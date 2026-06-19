@@ -54,8 +54,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
-      <body suppressHydrationWarning>
+    <html lang="en" className={inter.className}>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

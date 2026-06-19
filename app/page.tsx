@@ -27,11 +27,9 @@ export default async function Home() {
         <div className="container">
           <div className="hero-inner">
             <div style={{ flex: 1, maxWidth: 560 }}>
-              <p style={{ fontSize: 14, fontWeight: 500, textTransform: "uppercase", letterSpacing: "1.5px", color: "var(--color-accent)", marginBottom: 8 }}>
-                Full-Stack Developer
-              </p>
+              <p className="eyebrow">Full-Stack Developer</p>
               <h1 style={{ marginBottom: 16 }}>Jari Dijk</h1>
-              <p style={{ fontSize: 18, color: "var(--color-gray-text)", marginBottom: 24, lineHeight: 1.5 }}>
+              <p className="lead" style={{ marginBottom: 24 }}>
                 I build modern web applications, dashboards and interactive experiences with Blazor, .NET and Unity. My focus is on writing scalable, maintainable code and making intuitive user interfaces.
               </p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>

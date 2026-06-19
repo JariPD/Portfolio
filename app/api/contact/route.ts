@@ -71,7 +71,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "All fields are required." }, { status: 400 });
   }
 
-  const trimmedName = name.trim();
+  // Strip CR/LF from the name: it flows into the email Subject header, and newlines
+  // there are the classic email-header-injection vector. Defense in depth — Resend's
+  // JSON API already encodes headers, but a name legitimately never contains newlines.
+  const trimmedName = name.replace(/[\r\n]+/g, " ").trim();
   const trimmedEmail = email.trim();
   const trimmedMessage = message.trim();
 

@@ -105,6 +105,11 @@
 .text-gray-sm { color: var(--color-gray-text); font-size: 15px; }
 .text-small   { font-size: 14px; color: var(--color-gray-text); }
 
+/* Section eyebrow (uppercase accent label above a heading) and hero/lead paragraph.
+   Shared by the hero (app/page.tsx) and the 404 page (app/not-found.tsx). */
+.eyebrow { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-accent); margin-bottom: 8px; }
+.lead    { font-size: 18px; color: var(--color-gray-text); line-height: 1.5; }
+
 /* ── Buttons ────────────────────────────────────────────────────────────── */
 .btn-primary {
   background-color: var(--color-accent);
@@ -160,6 +165,10 @@
   padding: 24px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
+
+/* Interactive card surface (project cards) — lift the shadow on hover. */
+.card-hover { transition: box-shadow 0.2s; }
+.card-hover:hover { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14); }
 
 /* ── Tech tags ──────────────────────────────────────────────────────────── */
 .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -320,6 +329,25 @@
 .contact-link:hover { color: var(--color-accent); text-decoration: none; }
 
 /* ── Header ─────────────────────────────────────────────────────────────── */
+.brand {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  transition: color 0.15s;
+}
+.brand:hover { color: var(--color-accent); text-decoration: none; }
+
+.nav-link {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--color-accent); text-decoration: none; }
+
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -344,6 +372,39 @@
   gap: 32px;
   padding: 32px;
 }
+
+/* Modal controls: project prev/next, close, and thumbnail-strip arrows.
+   Disabled state dims and drops the pointer; hover only reacts when enabled. */
+.modal-nav-btn,
+.modal-close-btn,
+.thumb-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--color-light-gray);
+  transition: background 0.15s;
+}
+.modal-nav-btn:hover:not(:disabled),
+.modal-close-btn:hover,
+.thumb-nav-btn:hover:not(:disabled) { background: var(--color-border); }
+
+.modal-nav-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--color-border); font-size: 14px;
+}
+.modal-nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+.modal-close-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: none; font-size: 18px;
+}
+
+.thumb-nav-btn {
+  width: 28px; height: 40px; border-radius: 4px; flex-shrink: 0;
+  border: 1px solid var(--color-border); font-size: 13px;
+}
+.thumb-nav-btn:disabled { opacity: 0.25; cursor: default; }
 
 /* ── Reveal scroll animation ────────────────────────────────────────────── */
 .reveal         { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
