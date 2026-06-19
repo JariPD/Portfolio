@@ -3,6 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 
 type FieldErrors = { name?: string; email?: string; message?: string };
+type Field = "name" | "email" | "message";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Single source of truth for field validation. Both the full-form check (on submit)
+// and the per-field check (on blur) run these, so a field's error message never
+// depends on which path triggered it.
+const RULES: Record<Field, (value: string) => string | undefined> = {
+  name: (v) => (v.trim().length < 2 ? "Please enter your name (at least 2 characters)" : undefined),
+  email: (v) => (EMAIL_RE.test(v) ? undefined : "Please enter a valid email address"),
+  message: (v) => (v.trim().length < 10 ? "Please enter your message (at least 10 characters)" : undefined),
+};
 
 function fieldStyle(error?: string, success?: boolean) {
   return {
@@ -29,25 +41,21 @@ export default function ContactForm() {
   }, []);
 
   function validate(): FieldErrors {
-    const errs: FieldErrors = {};
-    if (values.name.trim().length < 2) errs.name = "Please enter your name (at least 2 characters)";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) errs.email = "Please enter a valid email address";
-    if (values.message.trim().length < 10) errs.message = "Please enter your message (at least 10 characters)";
-    return errs;
+    return {
+      name: RULES.name(values.name),
+      email: RULES.email(values.email),
+      message: RULES.message(values.message),
+    };
   }
 
-  function validateField(name: keyof typeof values, value: string) {
-    const errs: FieldErrors = {};
-    if (name === "name" && value.trim().length < 2) errs.name = "Please enter your name";
-    if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) errs.email = "Please enter a valid email address";
-    if (name === "message" && value.trim().length < 10) errs.message = "Please enter your message (at least 10 characters)";
-    setErrors((prev) => ({ ...prev, [name]: errs[name] }));
+  function validateField(name: Field, value: string) {
+    setErrors((prev) => ({ ...prev, [name]: RULES[name](value) }));
   }
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length > 0) {
+    if (Object.values(errs).some(Boolean)) {
       setErrors(errs);
       return;
     }
