@@ -40,16 +40,23 @@ export function mediaThumb(item: MediaItem): string {
   }
 }
 
-// Data-access boundary (repository). Reads the static JSON source today; swapping
-// to a real API later only changes this file. Newest projects first.
-export async function getAllProjects(): Promise<Project[]> {
-  // JSON imports widen the `media[].type` literals to `string`, so cast through unknown.
-  const projects = projectsData as unknown as Project[]
+// Newest first: year descending, then month descending. Missing year/month sort last
+// (treated as 0). Pure + array-in/array-out so the ordering logic is unit-testable
+// without touching the data source.
+export function sortProjectsByNewest(projects: Project[]): Project[] {
   return [...projects].sort((a, b) => {
     const byYear = (b.year ?? 0) - (a.year ?? 0)
     if (byYear !== 0) return byYear
     return (b.month ?? 0) - (a.month ?? 0)
   })
+}
+
+// Data-access boundary (repository). Reads the static JSON source today; swapping
+// to a real API later only changes this file. Newest projects first.
+export async function getAllProjects(): Promise<Project[]> {
+  // JSON imports widen the `media[].type` literals to `string`, so cast through unknown.
+  const projects = projectsData as unknown as Project[]
+  return sortProjectsByNewest(projects)
 }
 
 // Featured = explicitly flagged in the JSON. Falls back to all projects when nothing
