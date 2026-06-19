@@ -8,7 +8,6 @@
     "problem": "A publishing company needed a centralised platform to manage their editorial workflow — from draft creation to scheduled publishing — replacing a patchwork of spreadsheets and email chains.",
     "approach": "Built a server-side Blazor application with a .NET 8 REST API backend. MongoDB stores flexible document-based content. Role-based access control separates editors, authors and admins. Real-time status updates handled via Blazor's SignalR integration.",
     "role": "Full-stack developer — responsible for the full architecture, API design, MongoDB schema and Blazor component library.",
-    "color": "#3182CE",
     "thumbnail": "https://picsum.photos/seed/cms-thumb/800/450",
     "media": [
       { "type": "image", "src": "https://picsum.photos/seed/cms-1/800/500" },
@@ -32,7 +31,6 @@
     "problem": "Developed as a graduation project during my MBO Game Development programme. The goal was to ship a complete, polished game loop with replayability beyond a fixed level set.",
     "approach": "Procedural level generation using a tile-chunk system in C#. Physics-based movement with coyote time and input buffering for responsive controls. Score submission handled via a lightweight REST API, with a live leaderboard fetched on the main menu.",
     "role": "Solo developer — game design, all Unity systems, procedural generation algorithm and backend leaderboard API.",
-    "color": "#744210",
     "thumbnail": "https://picsum.photos/seed/voidrun-thumb/800/450",
     "media": [
       { "type": "image", "src": "https://picsum.photos/seed/voidrun-1/800/500" },
@@ -55,7 +53,6 @@
     "problem": "A client needed to consolidate data from multiple internal tools into a single, readable overview — with the ability to filter by date range, category and region without involving a developer.",
     "approach": "Blazor WebAssembly frontend consuming a .NET REST API. ApexCharts integrated for interactive line, bar and pie charts with live filtering. Data is stored in MongoDB and aggregated server-side before being passed to the client as typed DTOs.",
     "role": "Full-stack developer — API design, MongoDB aggregation pipelines, Blazor component architecture and ApexCharts integration.",
-    "color": "#38A169",
     "thumbnail": "https://picsum.photos/seed/analytics-thumb/800/450",
     "media": [
       { "type": "image", "src": "https://picsum.photos/seed/analytics-1/800/500" },
