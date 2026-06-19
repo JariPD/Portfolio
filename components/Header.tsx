@@ -46,37 +46,14 @@ export default function Header() {
         }}
       >
         {/* Logo */}
-        <Link
-          href="/"
-          style={{
-            fontSize: 22,
-            fontWeight: 700,
-            color: "var(--color-primary)",
-            textDecoration: "none",
-            letterSpacing: "-0.5px",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
-          onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-primary)")}
-        >
+        <Link href="/" className="brand">
           JD
         </Link>
 
         {/* Desktop nav */}
         <nav className="desktop-nav">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              style={{
-                fontSize: 15,
-                fontWeight: 500,
-                color: "var(--color-text)",
-                textDecoration: "none",
-                transition: "color 0.15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text)")}
-            >
+            <a key={link.href} href={link.href} className="nav-link">
               {link.label}
             </a>
           ))}

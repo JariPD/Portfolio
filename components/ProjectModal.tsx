@@ -6,6 +6,8 @@ import Image from "next/image";
 import type { Project } from "@/lib/projects";
 import { mediaThumb } from "@/lib/projects";
 import { formatProjectDate } from "@/lib/format";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { useModalControls } from "@/hooks/useModalControls";
 import MediaVideo from "./media/MediaVideo";
 import MediaEmbed from "./media/MediaEmbed";
 
@@ -29,6 +31,12 @@ export default function ProjectModal({
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+
+  const goPrev = useCallback(() => setCurrentIndex((i) => (i > 0 ? i - 1 : i)), []);
+  const goNext = useCallback(
+    () => setCurrentIndex((i) => (i < allProjects.length - 1 ? i + 1 : i)),
+    [allProjects.length]
+  );
 
   // Keep selectedImage in sync with carousel, and ensure it stays visible in the thumb strip
   useEffect(() => {
@@ -56,49 +64,10 @@ export default function ProjectModal({
     emblaApi?.scrollTo(0, true);
   }, [currentIndex, emblaApi]);
 
-  const handleKey = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight" && currentIndex < allProjects.length - 1)
-        setCurrentIndex((i) => i + 1);
-      if (e.key === "ArrowLeft" && currentIndex > 0)
-        setCurrentIndex((i) => i - 1);
-      // Focus trap: keep Tab cycling inside the dialog so keyboard users can't tab
-      // out behind the modal.
-      if (e.key === "Tab" && dialogRef.current) {
-        const focusable = dialogRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    },
-    [onClose, currentIndex, allProjects.length]
-  );
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleKey);
-      document.body.style.overflow = "";
-    };
-  }, [handleKey]);
-
-  // Move focus into the dialog on open and restore it to the trigger on close.
-  useEffect(() => {
-    const previouslyFocused = document.activeElement as HTMLElement | null;
-    dialogRef.current?.focus();
-    return () => previouslyFocused?.focus?.();
-  }, []);
+  // Escape-to-close, arrow-key project navigation, and body scroll lock.
+  useModalControls({ onClose, onPrev: goPrev, onNext: goNext });
+  // Focus into the dialog on open, trap Tab inside it, restore focus to the trigger on close.
+  useFocusTrap(dialogRef);
 
   const hasDemo = Boolean(project.demoUrl);
   const hasGithub = Boolean(project.githubUrl);
@@ -107,14 +76,6 @@ export default function ProjectModal({
   const thumbItems = media.slice(thumbOffset, thumbOffset + THUMB_VISIBLE);
   const canThumbPrev = thumbOffset > 0;
   const canThumbNext = thumbOffset + THUMB_VISIBLE < media.length;
-
-  const navBtn = (style?: React.CSSProperties): React.CSSProperties => ({
-    width: 28, height: 40, border: "1px solid var(--color-border)",
-    background: "var(--color-light-gray)", borderRadius: 4, cursor: "pointer",
-    display: "flex", alignItems: "center", justifyContent: "center",
-    fontSize: 13, flexShrink: 0, transition: "background 0.15s",
-    ...style,
-  });
 
   return (
     <div
@@ -149,17 +110,10 @@ export default function ProjectModal({
           {/* Navigation: prev / counter / next */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <button
-              onClick={() => setCurrentIndex((i) => i - 1)}
+              onClick={goPrev}
               disabled={currentIndex === 0}
               aria-label="Previous project"
-              style={{
-                width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--color-border)",
-                background: "var(--color-light-gray)", cursor: "pointer", fontSize: 14,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                opacity: currentIndex === 0 ? 0.3 : 1, transition: "background 0.15s",
-              }}
-              onMouseEnter={(e) => { if (currentIndex > 0) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-border)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-light-gray)"; }}
+              className="modal-nav-btn"
             >
               ←
             </button>
@@ -167,34 +121,16 @@ export default function ProjectModal({
               {currentIndex + 1} / {allProjects.length}
             </span>
             <button
-              onClick={() => setCurrentIndex((i) => i + 1)}
+              onClick={goNext}
               disabled={currentIndex === allProjects.length - 1}
               aria-label="Next project"
-              style={{
-                width: 32, height: 32, borderRadius: "50%", border: "1px solid var(--color-border)",
-                background: "var(--color-light-gray)", cursor: "pointer", fontSize: 14,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                opacity: currentIndex === allProjects.length - 1 ? 0.3 : 1, transition: "background 0.15s",
-              }}
-              onMouseEnter={(e) => { if (currentIndex < allProjects.length - 1) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-border)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-light-gray)"; }}
+              className="modal-nav-btn"
             >
               →
             </button>
           </div>
-          
-          <button
-            onClick={onClose}
-            style={{
-              width: 36, height: 36, background: "var(--color-light-gray)",
-              border: "none", borderRadius: "50%", fontSize: 18, cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              transition: "background 0.15s",
-            }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-border)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-light-gray)"; }}
-            aria-label="Close"
-          >
+
+          <button onClick={onClose} className="modal-close-btn" aria-label="Close">
             ✕
           </button>
         </div>
@@ -271,9 +207,7 @@ export default function ProjectModal({
                   onClick={() => setThumbOffset((o) => o - 1)}
                   disabled={!canThumbPrev}
                   aria-label="Previous thumbnails"
-                  style={navBtn({ opacity: canThumbPrev ? 1 : 0.25, cursor: canThumbPrev ? "pointer" : "default" })}
-                  onMouseEnter={(e) => { if (canThumbPrev) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-border)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-light-gray)"; }}
+                  className="thumb-nav-btn"
                 >
                   ←
                 </button>
@@ -315,9 +249,7 @@ export default function ProjectModal({
                   onClick={() => setThumbOffset((o) => o + 1)}
                   disabled={!canThumbNext}
                   aria-label="Next thumbnails"
-                  style={navBtn({ opacity: canThumbNext ? 1 : 0.25, cursor: canThumbNext ? "pointer" : "default" })}
-                  onMouseEnter={(e) => { if (canThumbNext) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-border)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-light-gray)"; }}
+                  className="thumb-nav-btn"
                 >
                   →
                 </button>
@@ -349,9 +281,9 @@ export default function ProjectModal({
               { label: "My role", text: project.role },
             ].map(({ label, text }) => (
               <div key={label} style={{ marginBottom: 16 }}>
-                <h4 style={{ fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.8px", color: "var(--color-gray-text)", marginBottom: 4 }}>
+                <h3 style={{ fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.8px", color: "var(--color-gray-text)", marginBottom: 4 }}>
                   {label}
-                </h4>
+                </h3>
                 <p style={{ fontSize: 15, lineHeight: 1.6, color: "var(--color-text)" }}>{text}</p>
               </div>
             ))}

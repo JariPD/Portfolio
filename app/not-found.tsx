@@ -11,11 +11,9 @@ export default function NotFound() {
     <main>
       <section className="section" style={{ minHeight: "70vh", display: "flex", alignItems: "center" }}>
         <div className="container" style={{ textAlign: "center", maxWidth: 520 }}>
-          <p style={{ fontSize: 14, fontWeight: 500, textTransform: "uppercase", letterSpacing: "1.5px", color: "var(--color-accent)", marginBottom: 8 }}>
-            404
-          </p>
+          <p className="eyebrow">404</p>
           <h1 style={{ marginBottom: 16 }}>Page not found</h1>
-          <p style={{ fontSize: 18, color: "var(--color-gray-text)", marginBottom: 32, lineHeight: 1.5 }}>
+          <p className="lead" style={{ marginBottom: 32 }}>
             The page you&apos;re looking for doesn&apos;t exist or has been moved.
           </p>
           <div style={{ display: "flex", gap: 8, justifyContent: "center", flexWrap: "wrap" }}>

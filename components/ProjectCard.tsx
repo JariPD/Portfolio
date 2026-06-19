@@ -16,10 +16,7 @@ export default function ProjectCard({ project, index, allProjects }: {
 
   return (
     <>
-      <div className="card reveal" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16, transition: "box-shadow 0.2s" }}
-        onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(0,0,0,0.14)"; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)"; }}
-      >
+      <div className="card card-hover reveal" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
         <div>
           {/* Thumbnail */}
           <div style={{
